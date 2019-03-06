@@ -1,22 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import { RegistrationPage } from '../pages/registration/registration';
+import * as firebase from 'firebase'
+import { SigninPage } from '../pages/signin/signin';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public zone:NgZone) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });
+    firebase.auth().onAuthStateChanged((user)=>{
+     if(user){
+       this.zone.run(()=>{
+         this.rootPage=HomePage
+         console.log(user);
+       })
+      }else{
+        this.rootPage=SigninPage
+      }
+    });
+
   }
+  // logOut(){
+  //   firebase.auth().signOut();
+  // }
 }
 
