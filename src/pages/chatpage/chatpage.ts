@@ -2,12 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase'
 
-/**
- * Generated class for the ChatpagePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -64,7 +58,10 @@ export class ChatpagePage {
             this.message=[];
             for(let key in allMsg){
               allMsg[key].msgKey=key;
-               this.messages.push(allMsg[key]);
+              if(allMsg[key].senderId == this.senderId){
+                this.messages.push(allMsg[key]);
+              }
+               
             }
             console.log(this.messages);
           }

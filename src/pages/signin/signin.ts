@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { RegistrationPage } from '../registration/registration';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the SigninPage page.
@@ -45,6 +46,7 @@ export class SigninPage {
     }
     this.service.signIn(userdata).then((response:any)=>{
       console.log(response);
+      this.navCtrl.setRoot(HomePage);
      }).catch((error)=>{
      })
    }
